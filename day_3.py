@@ -23,22 +23,22 @@ with open("data.txt", "r") as file:
 
 badge_priority: int = 0
 item_priority: int = 0
-elves_in_group: list = []
+group_items: list = []
 
-for line in range(len(data)):
+for line in data:
     # Calculate badge priorities
-    elves_in_group.append(set(data[line]))
-    if len(elves_in_group) == 3:
-        badge_priority += prioritize(elves_in_group[0] &
-                                     elves_in_group[1] &
-                                     elves_in_group[2])
-        elves_in_group.clear()
+    group_items.append(set(line))
+    if len(group_items) == 3:
+        badge_priority += prioritize(group_items[0] &
+                                     group_items[1] &
+                                     group_items[2])
+        group_items.clear()
 
     # Calculate item priorities
-    line_length: int = len(data[line])
+    line_length: int = len(line)
     separator: int = int(line_length / 2)
-    compartment_1: set = set(data[line][:separator])
-    compartment_2: set = set(data[line][separator:])
+    compartment_1: set = set(line[:separator])
+    compartment_2: set = set(line[separator:])
     dupes: set = set()
     if len(compartment_1 | compartment_2) != line_length:
         for item in compartment_1:
